@@ -5,15 +5,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="display.css" />
-
+<script> 
+    async function callPress() {
+                fetch('https://muzqkxfuo0.execute-api.us-east-1.amazonaws.com/Prod/press', {
+                    method: 'GET'
+                    })
+                    .then(response => response.json())
+                    .then((response) => {
+                        console.log(response);
+                        document.getElementById("myDiv").innerHTML = response.body;
+                    });
+                }
+    
+    
+    	async function getAgreeCount() {
+				fetch( 'https://muzqkxfuo0.execute-api.us-east-1.amazonaws.com/Prod/Reading',  {
+					method: 'GET'
+				})
+				.then(response => response.json())
+				.then((response) => {
+					console.log(response);
+					document.getElementById("count").innerHTML = response.body.Count;
+				});
+			}
+			
+			async function agree() {
+				fetch( 'https://muzqkxfuo0.execute-api.us-east-1.amazonaws.com/Prod/Record',  {
+					method: 'POST'
+				})
+				.then(response => response.json())
+				.then((response) => {
+					console.log(response);
+					document.getElementById("agree").disabled = true;
+					getAgreeCount();
+				});
+			}
+			window.onload = getAgreeCount();
+    
+    </script>
+    
 </head>
 <body>
+  
 
 <div class="header">
+    
   <h1>Makings with Megan</h1>
   <p>A Website About Food!.</p>
 </div>
 
+      <div class="LikeButton">
+			<p>Page Likes</p>
+			<p><span id="count"></span> people like my page</p>
+			<button class="11" onclick="agree()">Like</button>
+    </div>
 <div class="navbar">
     <a href="mainpage.html">Main</a>
     <a href="Avocado.html">Avocado Toast</a>
@@ -37,7 +82,8 @@
         <p>Cookies</p>
         <img src="IMG_1084.png" width="200" height="200" >
 
-
+<p><div id="myDiv"></div></p>
+        <button onclick="callPress()">Food Generator</button>
 
 
     </div>
